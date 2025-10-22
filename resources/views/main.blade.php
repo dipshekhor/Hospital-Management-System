@@ -64,13 +64,13 @@
         <div class="collapse navbar-collapse" id="navbarSupport">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home</a>
+              <a class="nav-link" href="{{ route('index') }}">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="doctors.html">Doctors</a>
+              <a class="nav-link" href="{{ route('alldoctors') }}">Doctors</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="blog.html">News</a>
@@ -109,6 +109,7 @@
 
 <!-- doctors section -->
  @yield('index_page')
+ @yield('all_doctors')
 
   <div class="page-section bg-light">
     <div class="container">
@@ -199,7 +200,7 @@
     <div class="container">
       <h1 class="text-center wow fadeInUp">Make an Appointment</h1>
 
-      <form class="main-form">
+      <form class="main-form" action="#" method="post">
         <div class="row mt-5 ">
           <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
             <input type="text" class="form-control" placeholder="Full name">
@@ -211,7 +212,7 @@
             <input type="date" class="form-control">
           </div>
           <div class="col-12 col-sm-6 py-2 wow fadeInRight" data-wow-delay="300ms">
-            <select name="departement" id="departement" class="custom-select">
+            <select name="departement" id="departement" class="custom-select">             
               <option value="general">General Health</option>
               <option value="cardiology">Cardiology</option>
               <option value="dental">Dental</option>
