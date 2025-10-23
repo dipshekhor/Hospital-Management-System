@@ -15,6 +15,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/add_doctors', [AdminController::class, 'postAddDoctor'])->middleware('auth','verified')->name('post_add_doctor');
     Route::get('/view_doctors', [AdminController::class, 'viewDoctors'])->middleware('auth','verified')->name('view_doctors');
     Route::get('/delete_doctor/{id}', [AdminController::class, 'deleteDoctor'])->name('delete_doctor');
+    Route::get('/update_doctor/{id}', [AdminController::class, 'updateDoctor'])->name('update_doctor');
+    Route::post('/post_update_doctor/{id}', [AdminController::class, 'postUpdateDoctor'])->name('post_update_doctor');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
