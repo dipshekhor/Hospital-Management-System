@@ -31,8 +31,14 @@ class UserController extends Controller
     }
     public function Index()
     {
-        $doctors = Doctor::all();
-        $news = $this->newsService->getHealthNews(3);
+        try {
+            $doctors = Doctor::all();
+            $news = $this->newsService->getHealthNews(3);
+        } catch (\Exception $e) {
+            // If there's an error, use empty arrays
+            $doctors = Doctor::all();
+            $news = [];
+        }
         return view('index', compact('doctors', 'news'));
     }
     public function allDoctors()
@@ -47,6 +53,7 @@ class UserController extends Controller
        $appointment->email_address = $request->email_address;
        $appointment->submission_date = $request->submission_date;
        $appointment->speciality = $request->speciality;
+       $appointment->doctor_name = $request->doctor_name;
        $appointment->number = $request->number;
        $appointment->message = $request->message;
 
@@ -66,5 +73,12 @@ class UserController extends Controller
     {
         $doctors = Doctor::all();
         return view('about', compact('doctors'));
+    }
+
+    public function doctorDetails($id)
+    {
+        $doctor = Doctor::findOrFail($id);
+        $doctors = Doctor::all(); // For navbar/layout
+        return view('doctor-details', compact('doctor', 'doctors'));
     }
 }

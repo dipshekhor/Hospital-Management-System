@@ -15,6 +15,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Submission Date</th>
+                                        <th>Doctor Name</th>
                                         <th>Speciality</th>
                                         <th>Number</th>
                                         <th>Message</th>
@@ -28,6 +29,7 @@
                                             <td>{{ $appointment->full_name }}</td>
                                             <td>{{ $appointment->email_address}}</td>
                                             <td>{{ $appointment->submission_date }}</td>
+                                            <td><strong>{{ $appointment->doctor_name }}</strong></td>
                                             <td>{{ $appointment->speciality }}</td>
                                             <td>{{ $appointment->number }}</td>
                                             <td>{{ $appointment->message }}</td>

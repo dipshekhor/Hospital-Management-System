@@ -76,7 +76,7 @@
               <a class="nav-link" href="{{ route('news') }}">News</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
+              <a class="nav-link" href="#footer">Contact</a>
             </li>
             @if(!Auth::check())
             <li>
@@ -112,6 +112,7 @@
  @yield('all_doctors')
  @yield('news_page')
  @yield('about_page')
+ @yield('doctor_details')
 
   <div class="page-section bg-light">
     <div class="container">
@@ -163,7 +164,7 @@
 
   <div class="page-section">
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Make an Appointment</h1>
+      <h1 class="text-center wow fadeInUp" id="appointment">Make an Appointment</h1>
       <p class="bg bg-primary">
         @if(session('appointment_message'))
 
@@ -185,11 +186,12 @@
             <input type="date" name="submission_date" class="form-control">
           </div>
           <div class="col-12 col-sm-6 py-2 wow fadeInRight" data-wow-delay="300ms">
-            <select name="speciality" id="departement" class="custom-select"> 
+            <select name="speciality" id="departement" class="custom-select" onchange="updateDoctorName(this)"> 
               @foreach($doctors as $doctor)            
-              <option value="{{$doctor->speciality}}">Doctor {{$doctor->doctors_name}}--{{$doctor->speciality}}</option>
+              <option value="{{$doctor->speciality}}" data-doctor-name="{{$doctor->doctors_name}}">Doctor {{$doctor->doctors_name}}--{{$doctor->speciality}}</option>
               @endforeach
             </select>
+            <input type="hidden" name="doctor_name" id="doctor_name" value="{{ $doctors->first()->doctors_name ?? '' }}">
           </div>
           <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
             <input type="text" name="number" class="form-control" placeholder="Number..">
@@ -205,14 +207,14 @@
   </div> <!-- .page-section -->
 
   
-
+<section class="footer-section">
   <footer class="page-footer">
     <div class="container">
       <div class="row px-md-3">
         <div class="col-sm-6 col-lg-3 py-3">
           <h5>Company</h5>
           <ul class="footer-menu">
-            <li><a href="#">About Us</a></li>
+            <li><a href="{{ route('about') }}">About Us</a></li>
             <li><a href="#">Career</a></li>
             <li><a href="#">Editorial Team</a></li>
             <li><a href="#">Protection</a></li>
@@ -237,7 +239,7 @@
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
           <h5>Contact</h5>
-          <p class="footer-link mt-2">351 Willow Street Franklin, MA 02038</p>
+          <p class="footer-link mt-2">Amar Ekushe Hall,Kuet,Khulna</p>
           <a href="#" class="footer-link">701-573-7582</a>
           <a href="#" class="footer-link">healthcare@temporary.net</a>
 
@@ -254,15 +256,38 @@
 
       <hr>
 
-      <p id="copyright">Copyright &copy; 2025 <a href="https://macodeid.com/" target="_blank">MACode ID</a>. All right reserved</p>
+      <p id="copyright">Copyright &copy; 2025 <a href="https://macodeid.com/" target="_blank">Dip Shekhor Datta</a>. All right reserved</p>
     </div>
   </footer>
+</section>
 
 <script src="{{ asset('fronend/assets/js/jquery-3.5.1.min.js') }}"></script>
 <script src="{{ asset('fronend/assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('fronend/assets/vendor/owl-carousel/js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('fronend/assets/vendor/wow/wow.min.js') }}"></script>
 <script src="{{ asset('fronend/assets/js/theme.js') }}"></script>
+
+<script>
+  // Update doctor name when selecting from dropdown
+  function updateDoctorName(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+    var doctorName = selectedOption.getAttribute('data-doctor-name');
+    document.getElementById('doctor_name').value = doctorName;
+  }
+  
+  // Smooth scroll to appointment section
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if URL has #appointment hash
+    if (window.location.hash === '#appointment') {
+      setTimeout(function() {
+        const appointmentSection = document.getElementById('appointment');
+        if (appointmentSection) {
+          appointmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    }
+  });
+</script>
 
 </body>
 </html>

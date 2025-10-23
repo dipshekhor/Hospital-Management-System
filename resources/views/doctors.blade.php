@@ -9,15 +9,17 @@
         <div class="item">
           <div class="card-doctor">
             <div class="header">
-              <img src="{{ asset('doctorimg/'.$doctor->doctor_image) }}" alt="$doctor->doctor_image">
+              <img src="{{ asset('doctorimg/'.$doctor->doctor_image) }}" alt="{{ $doctor->doctors_name }}">
               <div class="meta">
-                <a href="#"><span class="mai-call"></span></a>
-                <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                <a href="tel:{{ $doctor->doctors_phone }}"><span class="mai-call"></span></a>
+                <a href="https://wa.me/{{ $doctor->doctors_phone }}"><span class="mai-logo-whatsapp"></span></a>
               </div>
             </div>
             <div class="body">
               <p class="text-xl mb-0">{{ $doctor->doctors_name }}</p>
               <span class="text-sm text-grey">{{ $doctor->speciality }}</span>
+              <br>
+              <a href="{{ route('doctor.details', $doctor->id) }}" class="btn btn-primary btn-sm mt-2">View Details</a>
             </div>
           </div>
         </div>

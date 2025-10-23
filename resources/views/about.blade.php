@@ -44,6 +44,8 @@
               <div class="body">
                 <p class="text-xl mb-0">{{ $doctor->doctors_name }}</p>
                 <span class="text-sm text-grey">{{ $doctor->speciality }}</span>
+                <br>
+                <a href="{{ route('doctor.details', $doctor->id) }}" class="btn btn-primary btn-sm mt-2">View Details</a>
               </div>
             </div>
           </div>

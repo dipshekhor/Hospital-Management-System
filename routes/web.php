@@ -8,9 +8,10 @@ Route::get('/', [UserController::class, 'Index'])->name('index');
 
 Route::get('/dashboard', [UserController::class, 'Dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/doctors', [UserController::class, 'allDoctors'])->name('alldoctors');
+Route::get('/doctor/{id}', [UserController::class, 'doctorDetails'])->name('doctor.details');
 Route::get('/news', [UserController::class, 'News'])->name('news');
 Route::get('/about', [UserController::class, 'About'])->name('about');
-Route::post('/appointment', [UserController::class, 'MakeAnAppointment'])->name('appointment');
+Route::post('/appointment', [UserController::class, 'MakeAnAppointment'])->middleware(['auth', 'verified'])->name('appointment');
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/add_doctors', [AdminController::class, 'addDoctors'])->middleware('auth','verified')->name('add_doctors');

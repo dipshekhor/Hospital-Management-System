@@ -31,7 +31,9 @@ class NewsService
                         'language' => 'en',
                         'pageSize' => $limit,
                         'apiKey' => $this->apiKey,
-                    ]
+                    ],
+                    'timeout' => 5, // 5 second timeout
+                    'connect_timeout' => 3 // 3 second connection timeout
                 ]);
 
                 $data = json_decode($response->getBody(), true);
