@@ -30,4 +30,15 @@ class AdminController extends Controller
         return redirect()->back()->with('doctor_addmessage', 'Doctor added successfully !');
         
     }
+    public function viewDoctors()
+    {
+        $doctors = Doctor::all();
+        return view('admin.view_doctors', compact('doctors'));
+    }
+    public function deleteDoctor($id)
+    {
+        $doctor = Doctor::findOrFail($id);
+        $doctor->delete();
+        return redirect()->back();
+    }
 }
