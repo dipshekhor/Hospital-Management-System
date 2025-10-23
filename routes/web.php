@@ -8,6 +8,8 @@ Route::get('/', [UserController::class, 'Index'])->name('index');
 
 Route::get('/dashboard', [UserController::class, 'Dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/doctors', [UserController::class, 'allDoctors'])->name('alldoctors');
+Route::get('/news', [UserController::class, 'News'])->name('news');
+Route::get('/about', [UserController::class, 'About'])->name('about');
 Route::post('/appointment', [UserController::class, 'MakeAnAppointment'])->name('appointment');
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -17,6 +19,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/delete_doctor/{id}', [AdminController::class, 'deleteDoctor'])->name('delete_doctor');
     Route::get('/update_doctor/{id}', [AdminController::class, 'updateDoctor'])->name('update_doctor');
     Route::post('/post_update_doctor/{id}', [AdminController::class, 'postUpdateDoctor'])->name('post_update_doctor');
+    Route::get('/view_appointment', [AdminController::class, 'viewAppointment'])->name('view_appointment');
+    Route::post('/changestatus/{id}', [AdminController::class, 'changeStatus'])->name('changestatus');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

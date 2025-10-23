@@ -44,7 +44,7 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{ route('add_doctors') }}"> Add Doctors </a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{ route('view_doctors') }}"> View Doctors </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('view_appointment')}}"> View Appointment </a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
               </ul>
@@ -114,6 +114,7 @@
        <div class="main-panel">
         @yield('add_doctors')
         @yield('view_doctors')
+        @yield('view_appointments')
        </div>
      </div>
     <!-- container-scroller -->

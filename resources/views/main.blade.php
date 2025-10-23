@@ -8,7 +8,7 @@
 
   <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
-  <title>One Health - Medical Center HTML5 Template</title>
+  <title>Deep-Shikha - Medical Center</title>
 
  <link rel="stylesheet" href="{{ asset('fronend/assets/css/maicons.css') }}">
   <link rel="stylesheet" href="{{ asset('fronend/assets/css/bootstrap.css') }}">
@@ -46,7 +46,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="#"><span class="text-primary">One</span>-Health</a>
+        <a class="navbar-brand" href="#"><span class="text-primary">Deep</span>-Shikha</a>
 
         <form action="#">
           <div class="input-group input-navbar">
@@ -67,13 +67,13 @@
               <a class="nav-link" href="{{ route('index') }}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html">About Us</a>
+              <a class="nav-link" href="{{ route('about') }}">About Us</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ route('alldoctors') }}">Doctors</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="blog.html">News</a>
+              <a class="nav-link" href="{{ route('news') }}">News</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="contact.html">Contact</a>
@@ -110,86 +110,51 @@
 <!-- doctors section -->
  @yield('index_page')
  @yield('all_doctors')
+ @yield('news_page')
+ @yield('about_page')
 
   <div class="page-section bg-light">
     <div class="container">
       <h1 class="text-center wow fadeInUp">Latest News</h1>
       <div class="row mt-5">
-        <div class="col-lg-4 py-2 wow zoomIn">
-          <div class="card-blog">
-            <div class="header">
-              <div class="post-category">
-                <a href="#">Covid19</a>
-              </div>
-              <a href="blog-details.html" class="post-thumb">
-                <img src="{{ asset('fronend/assets/img/blog/blog_1.jpg') }}" alt="">
-              </a>
-            </div>
-            <div class="body">
-              <h5 class="post-title"><a href="blog-details.html">List of Countries without Coronavirus case</a></h5>
-              <div class="site-info">
-                <div class="avatar mr-2">
-                  <div class="avatar-img">
-                    <img src="../assets/img/person/person_1.jpg" alt="">
-                  </div>
-                  <span>Roger Adams</span>
+        @forelse($news ?? [] as $article)
+          <div class="col-lg-4 py-2 wow zoomIn">
+            <div class="card-blog">
+              <div class="header">
+                <div class="post-category">
+                  <a href="#">{{ $article['source']['name'] ?? 'Health' }}</a>
                 </div>
-                <span class="mai-time"></span> 1 week ago
+                <a href="{{ $article['url'] ?? '#' }}" target="_blank" class="post-thumb">
+                  <img src="{{ $article['urlToImage'] ?? asset('fronend/assets/img/blog/blog_1.jpg') }}" 
+                       alt="{{ $article['title'] ?? 'News' }}"
+                       onerror="this.src='{{ asset('fronend/assets/img/blog/blog_1.jpg') }}'">
+                </a>
+              </div>
+              <div class="body">
+                <h5 class="post-title">
+                  <a href="{{ $article['url'] ?? '#' }}" target="_blank">
+                    {{ Str::limit($article['title'] ?? 'Health News', 60) }}
+                  </a>
+                </h5>
+                <div class="site-info">
+                  <div class="avatar mr-2">
+                    <div class="avatar-img">
+                      <img src="{{ asset('fronend/assets/img/person/person_1.jpg') }}" alt="">
+                    </div>
+                    <span>{{ Str::limit($article['author'] ?? 'Health News', 20) }}</span>
+                  </div>
+                  <span class="mai-time"></span> 
+                  {{ \Carbon\Carbon::parse($article['publishedAt'] ?? now())->diffForHumans() }}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-4 py-2 wow zoomIn">
-          <div class="card-blog">
-            <div class="header">
-              <div class="post-category">
-                <a href="#">Covid19</a>
-              </div>
-              <a href="blog-details.html" class="post-thumb">
-                <img src="{{ asset('fronend/assets/img/blog/blog_2.jpg') }}" alt="">
-              </a>
-            </div>
-            <div class="body">
-              <h5 class="post-title"><a href="blog-details.html">Recovery Room: News beyond the pandemic</a></h5>
-              <div class="site-info">
-                <div class="avatar mr-2">
-                  <div class="avatar-img">
-                    <img src="../assets/img/person/person_1.jpg" alt="">
-                  </div>
-                  <span>Roger Adams</span>
-                </div>
-                <span class="mai-time"></span> 4 weeks ago
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 py-2 wow zoomIn">
-          <div class="card-blog">
-            <div class="header">
-              <div class="post-category">
-                <a href="#">Covid19</a>
-              </div>
-              <a href="blog-details.html" class="post-thumb">
-                <img src="{{ asset('fronend/assets/img/blog/blog_3.jpg') }}" alt="">
-              </a>
-            </div>
-            <div class="body">
-              <h5 class="post-title"><a href="blog-details.html">What is the impact of eating too much sugar?</a></h5>
-              <div class="site-info">
-                <div class="avatar mr-2">
-                  <div class="avatar-img">
-                    <img src="{{ asset('fronend/assets/img/person/person_2.jpg') }}" alt="">
-                  </div>
-                  <span>Diego Simmons</span>
-                </div>
-                <span class="mai-time"></span> 2 months ago
-              </div>
-            </div>
-          </div>
-        </div>
+        @empty
+          
+        @endforelse
 
         <div class="col-12 text-center mt-4 wow zoomIn">
-          <a href="blog.html" class="btn btn-primary">Read More</a>
+          <a href="{{ route('news') }}" target="_blank" class="btn btn-primary">Read More</a>
         </div>
 
       </div>
@@ -239,22 +204,7 @@
     </div>
   </div> <!-- .page-section -->
 
-  <div class="page-section banner-home bg-image" style="background-image: url({{ asset('fronend/assets/img/banner-pattern.svg') }});">
-    <div class="container py-5 py-lg-0">
-      <div class="row align-items-center">
-        <div class="col-lg-4 wow zoomIn">
-          <div class="img-banner d-none d-lg-block">
-            <img src="{{ asset('fronend/assets/img/mobile_app.png') }}" alt="">
-          </div>
-        </div>
-        <div class="col-lg-8 wow fadeInRight">
-          <h1 class="font-weight-normal mb-3">Get easy access of all features using One Health Application</h1>
-          <a href="#"><img src="{{ asset('fronend/assets/img/google_play.svg') }}" alt=""></a>
-          <a href="#" class="ml-2"><img src="{{ asset('fronend/assets/img/app_store.svg') }}" alt=""></a>
-        </div>
-      </div>
-    </div>
-  </div> <!-- .banner-home -->
+  
 
   <footer class="page-footer">
     <div class="container">
@@ -304,7 +254,7 @@
 
       <hr>
 
-      <p id="copyright">Copyright &copy; 2020 <a href="https://macodeid.com/" target="_blank">MACode ID</a>. All right reserved</p>
+      <p id="copyright">Copyright &copy; 2025 <a href="https://macodeid.com/" target="_blank">MACode ID</a>. All right reserved</p>
     </div>
   </footer>
 

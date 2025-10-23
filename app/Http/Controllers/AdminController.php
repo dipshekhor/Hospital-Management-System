@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\Appointment;
 class AdminController extends Controller
 {
     //
@@ -63,5 +64,17 @@ class AdminController extends Controller
             $request->doctor_image->move('doctorimg', $image_name);
         }
         return redirect()->back()->with('doctor_updatemessage', 'Doctor updated successfully !');
+    }
+    public function viewAppointment()
+    {
+        $appointments = Appointment::all();
+        return view('admin.view_appointments', compact('appointments'));
+    }
+    public function changeStatus(Request $request, $id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->status = $request->status;
+        $appointment->save();
+        return redirect()->back();
     }
 }

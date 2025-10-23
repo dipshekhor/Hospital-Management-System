@@ -6,8 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Doctor;
 use App\Models\Appointment;
+use App\Services\NewsService;
+
 class UserController extends Controller
 {
+    protected $newsService;
+
+    public function __construct(NewsService $newsService)
+    {
+        $this->newsService = $newsService;
+    }
     public function Dashboard()
     {
         if(Auth::check() && Auth::user()->user_type == 'user'){
@@ -24,7 +32,8 @@ class UserController extends Controller
     public function Index()
     {
         $doctors = Doctor::all();
-        return view('index', compact('doctors'));
+        $news = $this->newsService->getHealthNews(3);
+        return view('index', compact('doctors', 'news'));
     }
     public function allDoctors()
     {
@@ -41,8 +50,21 @@ class UserController extends Controller
        $appointment->number = $request->number;
        $appointment->message = $request->message;
 
-       
+
        $appointment->save();
        return redirect()->back()->with('appointment_message', 'Your appointment request has been submitted successfully !');
+    }
+
+    public function News()
+    {
+        $doctors = Doctor::all(); // Add doctors variable for main layout
+        $news = $this->newsService->getHealthNews(12); // Get 12 news articles for the news page
+        return view('news', compact('news', 'doctors'));
+    }
+
+    public function About()
+    {
+        $doctors = Doctor::all();
+        return view('about', compact('doctors'));
     }
 }
