@@ -8,11 +8,12 @@ Route::get('/', [UserController::class, 'Index'])->name('index');
 
 Route::get('/dashboard', [UserController::class, 'Dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/doctors', [UserController::class, 'allDoctors'])->name('alldoctors');
-
+Route::post('/appointment', [UserController::class, 'MakeAnAppointment'])->name('appointment');
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/add_doctors', [AdminController::class, 'addDoctors'])->middleware('auth','verified')->name('add_doctors');
     Route::post('/add_doctors', [AdminController::class, 'postAddDoctor'])->middleware('auth','verified')->name('post_add_doctor');
+
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
